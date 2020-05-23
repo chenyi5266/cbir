@@ -1,11 +1,18 @@
 import numpy as np
 from keras.models import Model
-from keras.datasets import mnist
+# from keras.datasets import mnist
 from keras.models import load_model
 from sklearn.metrics import label_ranking_average_precision_score
 
 # 加载数据集
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
+# (x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# 手动加载本地数据集
+path = './mnist.npz'
+f = np.load(path)
+x_train, y_train = f['x_train'], f['y_train']
+x_test, y_test = f['x_test'], f['y_test']
+f.close()
 
 # 加载训练的模型
 autoencoder = load_model('autoencoder.h5')

@@ -1,6 +1,6 @@
 import numpy as np
 from keras.models import Model
-from keras.datasets import mnist
+# from keras.datasets import mnist
 import cv2
 from keras.models import load_model
 from sklearn.metrics import label_ranking_average_precision_score
@@ -8,7 +8,15 @@ import time
 
 print('加载 mnist 数据集')
 t0 = time.time()
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
+# (x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# 手动加载本地数据集
+path = './mnist.npz'
+f = np.load(path)
+x_train, y_train = f['x_train'], f['y_train']
+x_test, y_test = f['x_test'], f['y_test']
+f.close()
+
 x_train = x_train.astype('float32') / 255.
 x_test = x_test.astype('float32') / 255.
 x_train = np.reshape(x_train, (len(x_train), 28, 28, 1))  # 可自行调整
